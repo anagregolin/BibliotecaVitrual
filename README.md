@@ -1,2 +1,2 @@
-# BibliotecaVitrual
-uma biblioteca virtual usando pycharm onde vc pode devolver, editar e excluir
+# BibliotecaVirtual
+uma bibloteca virtual usando, python, html e css, com comandos como editar, excluir, emprestar e devolver

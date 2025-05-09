@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Livros</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Livros</h1>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="alert-sucesso">
+              ✅ {{ messages[0] }}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <a href="{{ url_for('adicionar') }}" class="botao">+ Adicionar Livro</a>
+
+        <table>
+            <tr>
+                <th>Código</th>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Ano</th>
+                <th>Devolver até</th>
+                <th>Ações</th>
+            </tr>
+            {% for livro in livros %}
+            <tr>
+                <td>{{ livro.codigo }}</td>
+                <td>{{ livro.titulo }}</td>
+                <td>{{ livro.autor }}</td>
+                <td>{{ livro.ano }}</td>
+                <td>{{ livro.devolver_ate or '-' }}</td>
+                <td>
+                    <a href="{{ url_for('editar', codigo=livro.codigo) }}">✏️</a>
+                    <a href="{{ url_for('excluir', codigo=livro.codigo) }}">🗑️</a>
+                    {% if not livro.devolver_ate %}
+                    <a href="{{ url_for('emprestar', codigo=livro.codigo) }}" class="botao pequeno">Emprestar</a>
+                    {% else %}
+                    <a href="{{ url_for('devolver', codigo=livro.codigo) }}" class="botao pequeno vermelho">Devolver</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
